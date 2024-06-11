@@ -1,0 +1,30 @@
+form {
+  background: rgb(rgb(212, 28, 28), rgb(89, 34, 121), rgb(192, 42, 160));
+  padding: 170px;
+  max-width: 200px;
+  margin: 40px auto;
+  box-shadow: 0 4px 10px 4px;
+}
+
+label{
+
+font-size: 15px;
+position: relative;
+top: 5px; right:130px;
+
+}
+    
+input{
+   position: relative;
+   top: 5px; right: 130px; 
+   width: 270px;
+   font-size: 10px; 
+}
+
+button{
+    position: relative;
+    top: 5px; right: 130px; 
+    width: 270px;
+    font-size: 15px; 
+    background-color: rgb(223, 131, 203);
+}
