@@ -1,0 +1,44 @@
+<ng-container container>
+    <div class="container" style="padding-top: 5%;">
+        <div class="example-container">
+            <div style="display: flex; text-align: center; justify-content: center; width: 100%;">
+                <h1>Prep 2024</h1>
+            </div>
+            <form fxFlex fxLayout="column" fxLayoutGap="8px" class="styleFomDirecc" [formGroup]="formEdicion">
+                <div fxFlex="50" fxLayout="column">
+                    <mat-form-field style="width: 100%;">
+                        <mat-label>Curp</mat-label>
+                        <input matInput placeholder="Curp" required formControlName="curp">
+                        <mat-error *ngIf="curpControl.hasError('required')" class="letraError">
+                            Es obligatorio la Curp
+                        </mat-error>
+                        <mat-error *ngIf="curpControl.hasError('maxlength')">CURP debe tener 18
+                            caracteres.</mat-error>
+                        <mat-error *ngIf="curpControl.hasError('maxlength')">CURP no puede exceder los 18
+                            caracteres.</mat-error>
+                        <mat-error *ngIf="curpControl.hasError('curpInvalido')">CURP no tiene un formato
+                            válido.</mat-error>
+                    </mat-form-field>
+                </div>
+
+                <div fxFlex="50" fxLayout="column">
+                    <mat-form-field style="width: 100%;">
+                        <mat-label>Sección</mat-label>
+                        <input matInput placeholder="Sección" required formControlName="seccion">
+                        <mat-error *ngIf="seccionControl.hasError('required')" class="letraError">
+                            Es obligatorio la Sección
+                        </mat-error>
+                        <mat-error  *ngIf="seccionControl.hasError('seccionInvalida')">Sección debe ser un número.</mat-error>
+    
+                    </mat-form-field>
+                </div>
+            </form>
+
+            <div fxFlexFill fxLayout="row"
+                style="width: 100%; height: 10%; display: flex; text-align: center; align-items: center; justify-content: center; padding-top: 1%;">
+                <button mat-button class="ingresar-btn" style="width: 40%; height: 50px; color: #fff;"
+                    (click)="onClickVerificar()">Ingresar</button>
+            </div>
+        </div>
+    </div>
+</ng-container>

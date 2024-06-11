@@ -1,0 +1,17 @@
+.example-container {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .example-container > * {
+    width: 100%;
+  }
+
+  .ingresar-btn {
+    background-color: blue;
+    font-weight: bold;
+    width: auto;
+    height: auto;
+    color: #fff;
+    border-radius: 50px;
+  }

@@ -1,0 +1,34 @@
+<ng-container container>
+    <div class="container" style="padding-top: 5%;">
+        <div class="example-container">
+            <div style="width: 100%; display: flex; text-align: center; justify-content: center;">
+                <div fxLayout="column" fxLayoutGap="8px" fxLayoutAlign="center center" *ngIf="mostrarSpiner">
+                    <mat-progress-spinner class="example-margin" [color]="colorSpiner" [mode]="mode" [value]="value"
+                        diameter='60'>
+                    </mat-progress-spinner>
+                </div>
+            </div>
+            <div class="container mt-5">
+                <div class="row">
+                  <div *ngFor="let partido of listaPartidos" class="col-md-4 mb-4">
+                    <div class="card h-100">
+                      <img *ngIf="partido.imagenPartido" [src]="getImagenUrl(partido.imagenPartido)" class="card-img-top" alt="{{ partido.nombre }}">
+                      <div class="card-body">
+                        <h5 class="card-title">{{ partido.nombre }}</h5>
+                        <p class="card-text">{{ partido.descripcion }}</p>
+                        <h6>Candidato:</h6>
+                        <p>{{ partido.nombreCandidato }} {{ partido.apellidoCandidato }}</p>
+                        <h6>Propuestas:</h6>
+                        <ul>
+                          <li *ngFor="let propuesta of partido.propuestas">
+                            <strong>{{ propuesta.nombreCorto }}</strong>: {{ propuesta.descripcion }}
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+        </div>
+    </div>
+</ng-container>
