@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 export const PanelAdminRoutesNames = {
   login: 'login',
+  dashboard: 'dashboard',
 };
 
 const routes: Routes = [
@@ -12,13 +13,13 @@ const routes: Routes = [
       {path: PanelAdminRoutesNames.login,
         loadChildren: () => import('./login-admin/login.module').then(m => m.LoginModule)
       },
-      // {
-      //   path: `${EspecificacionesRoutesNames.consultar}/:modelo`,
-      //   loadChildren: () =>
-      //     import('./especificaciones/especificaciones.module').then(
-      //       (m) => m.EspecificacionesModule
-      //     ),
-      // },
+      {
+        path: PanelAdminRoutesNames.dashboard,
+        loadChildren: () =>
+          import('./dashboard/dashboard.module').then(
+            (m) => m.DashboardModule
+          ),
+      },
       { path: '**', redirectTo: PanelAdminRoutesNames.login },
     ],
   },
