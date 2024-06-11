@@ -1,38 +1,95 @@
 <!DOCTYPE html>
-<html lang="es">
-
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Panel de Administrador</title>
-    <link rel="preload" href="css/style.css" as="style">
-    <link rel="stylesheet" href="css/style.css">
-
+    <title>Panel Administrador</title>
+    <link rel="stylesheet" href="/CSS/main.css">
 </head>
 
+
+
+
 <body>
+  
+  
+  <div class="side-menu">
+
+    <div class="prep-name">
+
+      <h1>PREP 2024</h1>
+  
+  </div>
+
+    <ul>
+
+      <li>Dashboard</li>
+      <li>Crear partidos</li>
+      <li>Funcionario</li>
+   </ul>
+</div>
+  
+<div class="container">
+  <div class="header">
+    <div class="nav">
+      <div class="search">
+        <input type="text" placeholder="search...">
+          <button type="submit"><img src="" alt=""></button>
+      </div>
+  <div class="user">
+    <a href="#" class="btn">Añadir Nuevo</a>
+        <img src="" alt="">
+             <div class="img-case">
+                <img src="" alt="">
+                  </div>
+              </div>        
+          </div>
+      </div>
+  <div class="content">
+    <div class="cards">
+      <div class="card">
+        <div class="box">
+            <h1>2194</h1>
+                <h3>Prueba</h3>
+                  </div>
+                  <div class="icon-case">
+                    <img src="" alt="">
+                    </div>
+                </div>
+                <div class="card">
+                  <div class="box">
+                      <h1>2194</h1>
+                          <h3>Prueba</h3>
+                            </div>
+                            <div class="icon-case">
+                              <img src="" alt="">
+                              </div>
+                          </div>
+                          <div class="card">
+                            <div class="box">
+                                <h1>2194</h1>
+                                    <h3>Prueba</h3>
+                                      </div>
+                                      <div class="icon-case">
+                                        <img src="" alt="">
+                                        </div>
+                                    </div>
+                                </div>
+        <div class="content-2">
+            <div class="recent-payments"></div>
+            <div class="new-students"></div>
+
+        </div> 
+    </div>
+</div>
+</body>
+</html>
+
+<ng-container container>
+  <div class="container" style="padding-top: 5%;">
+    <div class="example-container">
+    </div>
+  </div>
+</ng-container>
 
 
-    <mat-drawer-container class="example-container" autosize>
-        <mat-drawer #drawer class="example-sidenav" mode="side">
-          <p>Auto-resizing sidenav</p>
-          @if (showFiller) {
-            <p>Lorem, ipsum dolor sit amet consectetur.</p>
-          }
-          <button (click)="showFiller = !showFiller" mat-raised-button>
-            Toggle extra text
-          </button>
-        </mat-drawer>
-      
-        <div class="example-sidenav-content">
-          <button type="button" mat-button (click)="drawer.toggle()">
-            Toggle sidenav
-          </button>
-        </div>
-      
-      </mat-drawer-container>
-
-  </div>   
-    </body>
-    </html>

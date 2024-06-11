@@ -1,30 +1,77 @@
+body{
+
+	margin: 0;
+	padding: 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	min-height: 100vh;
+	font-family: 'Jost', sans-serif;
+	background: linear-gradient(to bottom, #F4F4F4, #B283B9, #B4B4B4);
+}
+
+
 form {
-  background: rgb(rgb(212, 28, 28), rgb(89, 34, 121), rgb(192, 42, 160));
-  padding: 170px;
-  max-width: 200px;
-  margin: 40px auto;
-  box-shadow: 0 4px 10px 4px;
+		padding-top: 80px;
+		max-width: 600px;
+		margin: 100px auto;
+		background-color: rgb(247, 243, 243);
+		width: 400px;
+		border-radius: 20px;
+		padding: 40px 40px;
+		box-shadow: 0 10px 25px rgba(25, 26, 25, 0.2);
 }
 
 label{
 
-font-size: 15px;
-position: relative;
-top: 5px; right:130px;
-
+margin: auto;/******/
+max-width: 200px;  /**Este es para el tamaño*/
+padding: 0 5px; /*****este sirve para que haya un espacio**/
+color: black;
+position: center;
+top: 15px; 
+font-size: 16px;
+transition: 0.55;
 }
     
 input{
-   position: relative;
-   top: 5px; right: 130px; 
-   width: 270px;
-   font-size: 10px; 
+   
+margin: auto;/******/
+max-width: 330px;  /**Este es para el tamaño*/
+padding: 5px; /*****este sirve para que haya un espacio**/
+   
 }
 
 button{
-    position: relative;
-    top: 5px; right: 130px; 
-    width: 270px;
-    font-size: 15px; 
-    background-color: rgb(223, 131, 203);
+	
+	display: block;
+	margin-left: auto;
+	padding: 15px 30px;
+	border: none;
+	background-color: #C791A8;
+	color: white;
+	border-radius: 6px;
+	cursor: pointer;
+	font-size: 16px;
+	margin-top: 30px;
 }
+
+button:hover{
+
+	background-color: #C791A8;
+	transform: translateY(-2px);
+
+}
+
+
+h1{
+
+    text-align: center;
+    color: black;
+    font-weight: bolder;
+    margin: 0 0 40px;
+	font-size: 30px;
+	margin-bottom: 50px;
+
+}
+
