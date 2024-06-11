@@ -1,6 +1,6 @@
 export const server = 'localhost:44343';
 export const apiUrl = `https://${server}/`;
-export const apiServer= `https://webapi-aufit.onrender.com/`;
+export const apiServer= `https://webapivotos.onrender.com/`;
 export const esProduccion = true;
 
 export class API{
