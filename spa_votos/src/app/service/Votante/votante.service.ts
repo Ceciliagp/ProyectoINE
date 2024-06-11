@@ -19,7 +19,7 @@ export class VotanteService {
     private serviceBase : BaseService
   ) { }
 
-  getValidationUserEmail(model: MVerificacionVotante): Observable<RespuestaApi<MVotante>>{
+  getValidationUser(model: MVerificacionVotante): Observable<RespuestaApi<MVotante>>{
     return this.http.post<RespuestaApi<MVotante>>(`${API.get_url(EndpointVotante.VALIDAR_VOTANTE)}`, model)
     .pipe(
       catchError((err: HttpErrorResponse) => this.serviceBase.handleError<MVotante>(err))
