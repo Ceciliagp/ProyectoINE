@@ -3,7 +3,7 @@
     <div class="side-menu">
 
       <div class="prep-name">
-        <h1><img src="../assets/img/Logo.png" alt="">PREP 2024</h1>
+        <img src="../assets/img/Logo-PREP.png" alt="">
       </div>
       <ul>
         <li *ngIf="!esFuncionario" (click) = "onClicListDashBoard()"><img src="../assets/img/Dashboard.png" alt="">&nbsp; <span style="font-size: 15px;">Panel de {{mRol?.rol}}</span></li>
@@ -22,10 +22,6 @@
           </div>
           <div class="user">
             <a href="#" class="btn">Añadir Nuevo</a>
-            <img src="../assets/img/Notification.png" alt="">
-            <div class="img-case">
-              <img src="../assets/img/User.png" alt="">
-            </div>
           </div>
         </div>
       </div>
@@ -62,72 +58,24 @@
         <div class="content-2" *ngIf="esCrearFuncionario">
           <div class="recent-payments">
             <div class="title">
-              <h2>Recent Payments</h2>
-              <a href="#" class="btn">View All</a>
+              <h2>FUNCIONARIO</h2>
             </div>
             <table>
               <tr>
-                <th>Name1</th>
-                <th>Name2</th>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
-              </tr>
-
-              <tr>
-                <td>John Doe</td>
-                <td>sr. Jame College</td>
-                <td>$120</td>
-                <td><a href="#" class="btn">View</a></td>
-
-              </tr>
-
-              <tr>
-                <td>John Doe</td>
-                <td>sr. Jame College</td>
-                <td>$120</td>
-                <td><a href="#" class="btn">View</a></td>
-
-              </tr>
-              <tr>
-                <td>John Doe</td>
-                <td>sr. Jame College</td>
-                <td>$120</td>
-                <td><a href="#" class="btn">View</a></td>
+                <th>Candidatos</th>
+                <th>Partidos</th>
+                <th>Votos Contabilizados</th>
               </tr>
             </table>
           </div>
           <div class="new-students">
             <div class="title">
-              <h2>Nuevo Estudiante</h2>
-              <a href="#" class="btn">Ver Todo</a>
+              <h2>CASILLA</h2>
             </div>
             <table>
               <tr>
-
-                <th>Profile</th>
-                <th>Name</th>
-                <th>Option</th>
-
-              </tr>
-              <tr>
-
-                <td><img src="../assets/img/Notification.png" alt=""></td>
-                <td> John Steve Doe</td>
-                <td><img src="" alt=""></td>
-              </tr>
-              <tr>
-
-                <td><img src="../assets/img/Notification.png" alt=""></td>
-                <td> John Steve Doe</td>
-                <td><img src="" alt=""></td>
-              </tr>
-              <tr>
-
-                <td><img src="../assets/img/Notification.png" alt=""></td>
-                <td> John Steve Doe</td>
-                <td><img src="" alt=""></td>
+                <th>Hora Inicio</th>
+                <th>Hora Fin</th>
               </tr>
             </table>
           </div>

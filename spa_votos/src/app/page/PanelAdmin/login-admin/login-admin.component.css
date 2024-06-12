@@ -23,7 +23,6 @@ form {
 }
 
 label{
-
 margin: auto;/******/
 max-width: 200px;  /**Este es para el tamaño*/
 padding: 0 5px; /*****este sirve para que haya un espacio**/
@@ -35,7 +34,6 @@ transition: 0.55;
 }
     
 input{
-   
 margin: auto;/******/
 max-width: 330px;  /**Este es para el tamaño*/
 padding: 5px; /*****este sirve para que haya un espacio**/
@@ -65,7 +63,7 @@ button:hover{
 
 
 h1{
-
+	
     text-align: center;
     color: black;
     font-weight: bolder;
@@ -74,4 +72,10 @@ h1{
 	margin-bottom: 50px;
 
 }
+.iniciar-sesion img{
 
+	position: relative;
+	left: 20%;
+	top: 50%;
+  
+}
