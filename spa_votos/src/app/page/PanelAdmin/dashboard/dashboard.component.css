@@ -5,10 +5,6 @@
     font-family: Arial, Helvetica, sans-serif;
 }
 
-body{
-    min-height: 100vh;
-}
-
 a{
     text-decoration: none;
 }
@@ -17,6 +13,7 @@ li{
     list-style: none;
     position: relative;
     top: 50px; right: 25px;
+    cursor: pointer;
 }
 
 h1, h2{

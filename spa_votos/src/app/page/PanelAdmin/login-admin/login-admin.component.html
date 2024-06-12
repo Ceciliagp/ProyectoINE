@@ -1,26 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LOGIN</title>
-    <link rel="stylesheet" href="/CSS/stylecss">
-</head>
-<body>
-  
-   <form>
-      <div class="iniciar-sesion">
-        <h1>PREP 2024</h1>
-          </div>
-<div class="mb-3">
+<div class="body">
+
+  <form fxLayout="column" fxLayoutGap="8px" [formGroup]="formEdicion">
+    <div class="iniciar-sesion">
+      <h1>PREP 2024</h1>
+    </div>
+    <div class="mb-3">
       <label for="exampleInputEmail1" class="form-label">Usuario</label>
-      <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-  </div>
-  <div class="mb-3">
-    <label for="exampleInputPassword1" class="form-label">Contraseña</label>
-    <input type="password" class="form-control" id="exampleInputPassword1">
-  </div>
-  <button (click)="onGoDashboard()" class="btn btn-primary">Iniciar Sesión</button>
-</form>
-  </body>
-</html>
+      <input #miInput matInput type="text" formControlName="usuario" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+    </div>
+    <div class="mb-3">
+      <label for="exampleInputPassword1" class="form-label">Contraseña</label>
+      <input #miInput matInput type="password" class="form-control"  formControlName="contrasenia" id="exampleInputPassword1">
+    </div>
+    <button (click)="OnClickBtnIngresar()" class="btn btn-primary">Iniciar Sesión</button>
+  </form>
+</div>
