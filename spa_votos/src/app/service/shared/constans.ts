@@ -7,12 +7,9 @@ export const EndpointPartidos = {
     BASE: 'Partidos',
 }
 
-export const EndpointDirecciones = {
-    BASE: 'Direcciones',
-    ESTADOS: 'estados',
-    MUNICIPIOS: 'municipios',
-    COLONIAS: 'colonias',
-    USUARIO: 'usuario',
+export const EndpointUsuario = {
+    BASE: 'Usuarios',
+    VERIFICACION_LOGIN: 'Usuarios/verificacion'
 }
 
 export const EndpointCompra = {
