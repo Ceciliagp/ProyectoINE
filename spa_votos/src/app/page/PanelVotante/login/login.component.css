@@ -1,3 +1,17 @@
+form{
+
+  padding-top: 80px;
+  max-width: 600px;
+  margin: 100px auto;
+  background-color: rgb(247, 243, 243);
+  width: 400px;
+  border-radius: 20px;
+  padding: 40px 40px;
+  box-shadow: 0 10px 25px rgba(25, 26, 25, 0.2);
+
+
+}
+
 .example-container {
     display: flex;
     flex-direction: column;
@@ -8,10 +22,12 @@
   }
 
   .ingresar-btn {
-    background-color: blue;
+    background-color: #C791A8;
     font-weight: bold;
     width: auto;
     height: auto;
     color: #fff;
     border-radius: 50px;
   }
+
+
