@@ -2,9 +2,10 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MRol, MUsuario } from '../../../models/MUsuario';
 import { AdministradorService } from '../../../service/Admin/administrador.service';
 import { PartidosService } from '../../../service/Admin/partidos.service';
-import { MPartido } from '../../../models/MPartido';
+import { MImagenPartido, MPartido, MPropuesta } from '../../../models/MPartido';
 import { SnackBarService } from '../../../../utils/snack-bar/snack-bar.service';
 import { MatSidenav } from '@angular/material/sidenav';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-dashboard',
@@ -14,6 +15,7 @@ import { MatSidenav } from '@angular/material/sidenav';
 export class DashboardComponent implements OnInit {
   mUsuario: MUsuario | undefined;
   mRol: MRol | undefined;
+  imagenPartido: MImagenPartido | undefined;
   esPartidos = false;
   esDashBoard = true;
   esFuncionario = false;
@@ -22,9 +24,14 @@ export class DashboardComponent implements OnInit {
   listaPartidos: Array<MPartido> = [];
   tituloSideNavPartidos = '';
   formEdicion: any;
+  formPropuesta: any;
   selectedFile: File | null = null;
+  submitted = false;
+  propuestas: Array<MPropuesta> = [];
 
-  @ViewChild('sidenavEdicion', { static: true }) sidenav: MatSidenav | undefined;
+  @ViewChild('sidenavEdicion', { static: true }) sidenav:
+    | MatSidenav
+    | undefined;
 
   constructor(
     private _adminService: AdministradorService,
@@ -42,7 +49,54 @@ export class DashboardComponent implements OnInit {
 
     this.mRol = this.mUsuario.rol;
     this.esFuncionario = this.mRol?.rol === 'FUNCIONARIO';
+    this.iniciarFormEdicion();
+    this.iniciarFormEdicionProp();
     this.getPartidos();
+  }
+
+  private iniciarFormEdicion() {
+    this.formEdicion = new FormGroup({
+      nombre: new FormControl('', [Validators.required]),
+      descripcion: new FormControl(''),
+      candidato: new FormControl('', [Validators.required]),
+      apellido: new FormControl('', [Validators.required]),
+      fileName: new FormControl('', [Validators.required]),
+    });
+  }
+
+  private iniciarFormEdicionProp() {
+    this.formPropuesta = new FormGroup({
+      nombre: new FormControl('', [Validators.required]),
+      descripcion: new FormControl(''),
+    });
+  }
+
+  get nombreControl(): FormControl {
+    return this.formEdicion.get('nombre') as FormControl;
+  }
+
+  get descripcionControl(): FormControl {
+    return this.formEdicion.get('descripcion') as FormControl;
+  }
+
+  get candidatoControl(): FormControl {
+    return this.formEdicion.get('candidato') as FormControl;
+  }
+
+  get apellidoControl(): FormControl {
+    return this.formEdicion.get('apellido') as FormControl;
+  }
+
+  get fileNameControl(): FormControl {
+    return this.formEdicion.get('fileName') as FormControl;
+  }
+
+  get nomPropControl(): FormControl {
+    return this.formPropuesta.get('nombre') as FormControl;
+  }
+
+  get descPropControl(): FormControl {
+    return this.formPropuesta.get('descripcion') as FormControl;
   }
 
   GoToBack() {
@@ -73,6 +127,9 @@ export class DashboardComponent implements OnInit {
       if (data) {
         if (data.exitoso) {
           this.listaPartidos = data?.contenido ?? [];
+          // this.listaPartidos.forEach(e => {
+          //   e.urlImg = e.imagenPartido?.data
+          // });
         } else {
           this._snackBar.mostrarSnackBar(
             data.respuesta ??
@@ -112,26 +169,28 @@ export class DashboardComponent implements OnInit {
       }
     });
   }
-  
-  onClickBtnNuevoPartido(): void {
 
+  onClickBtnNuevoPartido(): void {
     if (!this.sidenav?.opened) {
+      this.formEdicion.reset();
+      this.selectedFile = null;
       this.tituloSideNavPartidos = 'Nuevo Partido';
       this.sidenav?.open();
     } else {
-      // this.formEdicion.reset();
+      this.formEdicion.reset();
+      this.selectedFile = null;
       // this.autoridadEmisoraEdicion = undefined;
       this.tituloSideNavPartidos = 'Nuevo Partido';
     }
   }
 
-  onClickBtnCerrarSidenavPartido(){
-    this.sidenav?.close()
-      .then(() => {
-        // this.formEdicion.reset();
-        // this.autoridadEmisoraEdicion = undefined;
-        this.tituloSideNavPartidos = 'Nuevo Partido';
-      });
+  onClickBtnCerrarSidenavPartido() {
+    this.sidenav?.close().then(() => {
+      this.formEdicion.reset();
+      this.selectedFile = null;
+      // this.autoridadEmisoraEdicion = undefined;
+      this.tituloSideNavPartidos = 'Nuevo Partido';
+    });
   }
 
   onDragOver(event: any) {
@@ -172,9 +231,110 @@ export class DashboardComponent implements OnInit {
       this.formEdicion.controls['fileName'].setValue(archivo.name);
       this._snackBar.mostrarSnackBar('Se ha cargado correctamente el archivo.');
     } else {
+      this._snackBar.mostrarSnackBar('Por favor, seleccione una imagen.');
+    }
+  }
+
+  onClickGuardarPartido() {
+    this.submitted = true;
+    this.formEdicion.markAllAsTouched();
+    if (this.formEdicion.valid && this.formEdicion.dirty) {
+      const mPartido = new MPartido();
+      mPartido.nombre = this.nombreControl.value;
+      mPartido.descripcion = this.descripcionControl.value;
+      mPartido.nombreCandidato = this.candidatoControl.value;
+      mPartido.apellidoCandidato = this.apellidoControl.value;
+
+      if (this.selectedFile === null) {
+        this._snackBar.mostrarSnackBar(
+          'Ha ocurrido un error en la obtención de la imagen'
+        );
+        return;
+      }
+      mPartido.propuestas = this.propuestas;
+      this.CrearPartido(mPartido, this.selectedFile);
+    } else {
+      this._snackBar.mostrarSnackBar('Verifique los datos solicitados.');
+    }
+  }
+
+  convertFileToBase64(file: File) {
+    const reader = new FileReader();
+    reader.onload = () => {
+      const base64String = (reader.result as string).split(',')[1];
+      this.imagenPartido = {
+        id: 0,
+        data: base64String,
+        fileName: file.name,
+        contentType: file.type,
+        idPartido: 0,
+      };
+    };
+    reader.readAsDataURL(file);
+  }
+
+  CrearPartido(modelo: MPartido, file: File) {
+    this._partidoService.crearPartido(modelo, file).subscribe((data) => {
+      if (data) {
+        if (data.exitoso) {
+          this._snackBar.mostrarSnackBar(
+            'Se ha Ingresado Correctamente el Partido'
+          );
+          this.onClickBtnNuevoPartido();
+          this.getPartidos();
+        } else {
+          this._snackBar.mostrarSnackBar(
+            data.respuesta ??
+              'Ha ocurrido un error durante la Creación del Partido, intente nuevamente.'
+          );
+          this.mostrarSpiner = false;
+        }
+      } else {
+        this._snackBar.mostrarSnackBar(
+          'Ha ocurrido un error inesperado, intente nuevamente.'
+        );
+        this.mostrarSpiner = false;
+      }
+    });
+  }
+
+  onClickAgregarPropuesta() {
+    this.formPropuesta.markAllAsTouched();
+    if (this.formPropuesta.valid && this.formPropuesta.dirty) {
+      const nombre = this.nomPropControl.value;
+      const descripcion = this.descPropControl.value;
+
+      const propuesta = new MPropuesta();
+      propuesta.descripcion = descripcion;
+      propuesta.nombreCorto = nombre;
+
+      if (this.propuestas.length === 0) {
+        this.propuestas.push(propuesta);
+        this.formPropuesta.reset();
+        return;
+      }
+
+      const repetido = this.propuestas.find(
+        (e) =>
+          e.nombreCorto.trim().toLowerCase() === nombre.trim().toLowerCase()
+      );
+
+      if (repetido) {
+        this._snackBar.mostrarSnackBar('Ya se encuentra en el listado.');
+        return;
+      }
+
+      this.formPropuesta.reset();
+      this.propuestas.push(propuesta);
+    } else {
       this._snackBar.mostrarSnackBar(
-        'Por favor, seleccione una imagen.'
+        'Verifique los datos solicitados de la Propuesta.'
       );
     }
   }
+
+  // obtenerImagen(id: string) {
+  //   const url = `URL_DE_TU_ENDPOINT/${id}`; // Reemplaza 'URL_DE_TU_ENDPOINT' con la URL de tu endpoint real
+  //   return this.http.get(url, { responseType: 'blob' });
+  // }
 }

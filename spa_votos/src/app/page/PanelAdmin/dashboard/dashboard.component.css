@@ -289,48 +289,51 @@ td {
 }
 
 .custom-iconMas {
-    background-image: url("../../../../assets/img/boton-mas.png");
-    margin-right: 8px;
-  }
+  background-image: url("../../../../assets/img/boton-mas.png");
+}
 
-  .custom-iconCerrar {
-    background-image: url("../../../../assets/img/cerrar.png");
-    font-size: 24px;
-  }
+.custom-iconCerrar {
+  background-image: url("../../../../assets/img/cerrar.png");
+  font-size: 24px;
+}
 
-  .custom-button {
-    width: 200px; /* Ancho del botón */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
+.custom-iconFile {
+  background-image: url("../../../../assets/img/carpeta.png");
+}
 
-  mat-sidenav-container {
-    height: 100%;
-    overflow: hidden;
-  }
-  
-  [side-nav-container-view] mat-sidenav {
-    min-width: 432px;
-  }
-  
-  [side-nav-container-view] mat-sidenav .mat-title {
-    margin: 0;
-  }
+.custom-button {
+  width: 200px; /* Ancho del botón */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
-  .file-drop {
-    border: 2px dashed #ccc;
-    padding: 20px;
-    text-align: center;
-    cursor: pointer;
-    width: 100%;
-  }
-  
-  .file-button {
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
+mat-sidenav-container {
+  height: 100%;
+  overflow: hidden;
+}
+
+[side-nav-container-view] mat-sidenav {
+  min-width: 432px;
+}
+
+[side-nav-container-view] mat-sidenav .mat-title {
+  margin: 0;
+}
+
+.file-drop {
+  border: 2px dashed #ccc;
+  padding: 20px;
+  text-align: center;
+  cursor: pointer;
+  width: 100%;
+}
+
+.file-button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
