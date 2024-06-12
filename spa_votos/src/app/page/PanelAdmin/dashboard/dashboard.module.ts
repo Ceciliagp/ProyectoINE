@@ -6,6 +6,7 @@ import { RouterModule } from "@angular/router";
 import { MaterialModule } from "../../../../utils/material.module";
 import { dashboardRoutes } from "./dashboard.routes";
 import { DashboardComponent } from "./dashboard.component";
+import { MatIconModule } from "@angular/material/icon";
 
 @NgModule({
     declarations: [
@@ -17,6 +18,7 @@ import { DashboardComponent } from "./dashboard.component";
       ReactiveFormsModule,
       MatSidenavModule, 
       MaterialModule,
+      MatIconModule,
       RouterModule.forChild(dashboardRoutes)
     ]
   })

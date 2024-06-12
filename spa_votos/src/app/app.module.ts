@@ -9,6 +9,7 @@ import { RouterModule } from '@angular/router';
 import { routes } from './app.routes';
 import { MaterialModule } from '../utils/material.module';
 import { ReactiveFormsModule } from '@angular/forms';
+import { MatIconModule } from '@angular/material/icon';
 
 
 @NgModule({
@@ -22,6 +23,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     BrowserAnimationsModule,
     MatSidenavModule, 
     MaterialModule,
+    MatIconModule,
     RouterModule.forRoot(routes),
     ReactiveFormsModule,
   ],
