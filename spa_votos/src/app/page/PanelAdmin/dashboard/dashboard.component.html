@@ -1,51 +1,36 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Panel Administrador</title>
-    <link rel="stylesheet" href="/CSS/main.css">
-</head>
+<ng-container container>
+  <div style="min-height: 100vh;">
+    <div class="side-menu">
 
-
-
-
-<body>
-  
-  
-  <div class="side-menu">
-
-    <div class="prep-name">
-
-      <h1><img src="../assets/img/Logo.png" alt="">PREP 2024</h1>
-  
-  </div>
-    <ul>
-      <li><img src="../assets/img/Dashboard.png" alt="">&nbsp; <span>Panel de Administrador</span></li>
-      <li><img src="../assets/img/Politic.png" alt="">&nbsp; <span>Crear Partido</span></li>
-      <li><img src="../assets/img/Person.png" alt="">&nbsp; <span>Crear Candidato</span></li>
-      <li><img src="../assets/img/Inventory.png" alt="">&nbsp; <span>Crear Funcionario de Casilla</span></li>
-   </ul>
-</div>
-  
-<div class="container">
-  <div class="header">
-    <div class="nav">
-      <div class="search">
-        <input type="text" placeholder="search...">
-          <button type="submit"><img src="../assets/img/Search.png" alt=""></button>
+      <div class="prep-name">
+        <h1><img src="../assets/img/Logo.png" alt="">PREP 2024</h1>
       </div>
-  <div class="user">
-    <a href="#" class="btn">Añadir Nuevo</a>
-        <img src="../assets/img/Notification.png" alt="">
-             <div class="img-case">
-                <img src="../assets/img/User.png" alt="">
-                  </div>
-              </div>        
+      <ul>
+        <li *ngIf="!esFuncionario" (click) = "onClicListDashBoard()"><img src="../assets/img/Dashboard.png" alt="">&nbsp; <span style="font-size: 15px;">Panel de {{mRol?.rol}}</span></li>
+        <li *ngIf="!esFuncionario" (click) = "onClicListPartidos()"><img src="../assets/img/Politic.png" alt="">&nbsp; <span style="font-size: 15px;">Partidos</span></li>
+        <li *ngIf="!esFuncionario" (click) = "onClicListFuncionarioCasilla()"><img src="../assets/img/Person.png" alt="">&nbsp; <span style="font-size: 15px;">Funcionarios de Casilla</span></li>
+        <li *ngIf="esFuncionario"><img src="../assets/img/Inventory.png" alt="">&nbsp; <span style="font-size: 15px;">Casillas</span></li>
+      </ul>
+    </div>
+
+    <div class="container">
+      <div class="header">
+        <div class="nav">
+          <div class="search">
+            <input type="text" placeholder="search...">
+            <button type="submit"><img src="../assets/img/Search.png" alt=""></button>
           </div>
+          <div class="user">
+            <a href="#" class="btn">Añadir Nuevo</a>
+            <img src="../assets/img/Notification.png" alt="">
+            <div class="img-case">
+              <img src="../assets/img/User.png" alt="">
+            </div>
+          </div>
+        </div>
       </div>
       <div class="content">
-        <div class="cards">
+        <div class="cards" *ngIf="esDashBoard">
           <div class="card">
             <div class="box">
               <h1>2194</h1>
@@ -74,87 +59,80 @@
             </div>
           </div>
         </div>
-        <div class="content-2">
-            <div class="recent-payments">
-                  <div class="title">
-                    <h2>Recent Payments</h2>
-                    <a href="#" class="btn">View All</a>
-                  </div>
-<table>
-  <tr>
-        <th>Name1</th>
-        <th>Name2</th>
-        <th></th>
-        <th></th>
-        <th></th>
-        <th></th>
-    </tr>
+        <div class="content-2" *ngIf="esCrearFuncionario">
+          <div class="recent-payments">
+            <div class="title">
+              <h2>Recent Payments</h2>
+              <a href="#" class="btn">View All</a>
+            </div>
+            <table>
+              <tr>
+                <th>Name1</th>
+                <th>Name2</th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+              </tr>
 
-<tr> 
-    <td>John Doe</td>
-    <td>sr. Jame College</td>
-    <td>$120</td>
-    <td><a href="#" class="btn">View</a></td>
+              <tr>
+                <td>John Doe</td>
+                <td>sr. Jame College</td>
+                <td>$120</td>
+                <td><a href="#" class="btn">View</a></td>
 
-</tr>
+              </tr>
 
-<tr> 
-  <td>John Doe</td>
-  <td>sr. Jame College</td>
-  <td>$120</td>
-  <td><a href="#" class="btn">View</a></td>
+              <tr>
+                <td>John Doe</td>
+                <td>sr. Jame College</td>
+                <td>$120</td>
+                <td><a href="#" class="btn">View</a></td>
 
-</tr>
-                        <tr> 
-                        <td>John Doe</td>
-                        <td>sr. Jame College</td>
-                        <td>$120</td>
-                        <td><a href="#" class="btn">View</a></td>
-                      </tr>
-                    </table> 
-                  </div> 
-                <div class="new-students">
-                    <div class="title">
-                      <h2>Nuevo Estudiante</h2>
-                          <a href="#" class="btn">Ver Todo</a>
-              </div>
-              <table>
-                <tr>
+              </tr>
+              <tr>
+                <td>John Doe</td>
+                <td>sr. Jame College</td>
+                <td>$120</td>
+                <td><a href="#" class="btn">View</a></td>
+              </tr>
+            </table>
+          </div>
+          <div class="new-students">
+            <div class="title">
+              <h2>Nuevo Estudiante</h2>
+              <a href="#" class="btn">Ver Todo</a>
+            </div>
+            <table>
+              <tr>
 
-                    <th>Profile</th>
-                    <th>Name</th>
-                    <th>Option</th>
+                <th>Profile</th>
+                <th>Name</th>
+                <th>Option</th>
 
-                </tr>
-                      <tr>
+              </tr>
+              <tr>
 
-                        <td><img src="../assets/img/Notification.png" alt=""></td>
-                          <td> John Steve Doe</td>
-                            <td><img src="" alt=""></td>
-                      </tr>
-                      <tr>
+                <td><img src="../assets/img/Notification.png" alt=""></td>
+                <td> John Steve Doe</td>
+                <td><img src="" alt=""></td>
+              </tr>
+              <tr>
 
-                        <td><img src="../assets/img/Notification.png" alt=""></td>
-                          <td> John Steve Doe</td>
-                            <td><img src="" alt=""></td>
-                      </tr>
-                      <tr>
+                <td><img src="../assets/img/Notification.png" alt=""></td>
+                <td> John Steve Doe</td>
+                <td><img src="" alt=""></td>
+              </tr>
+              <tr>
 
-                        <td><img src="../assets/img/Notification.png" alt=""></td>
-                          <td> John Steve Doe</td>
-                            <td><img src="" alt=""></td>
-                      </tr>
-                  </table>
-        </div> 
-    </div>
-</div>
-</div>
-</body>
-</html>
-
-<ng-container container>
-  <div class="container" style="padding-top: 5%;">
-    <div class="example-container">
+                <td><img src="../assets/img/Notification.png" alt=""></td>
+                <td> John Steve Doe</td>
+                <td><img src="" alt=""></td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </ng-container>
