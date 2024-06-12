@@ -6,6 +6,7 @@ export class MPartido {
   activo: boolean = false;
   nombreCandidato: string = '';
   apellidoCandidato: string = '';
+  urlImg : string = '';
   propuestas: MPropuesta[] = [];
 }
 

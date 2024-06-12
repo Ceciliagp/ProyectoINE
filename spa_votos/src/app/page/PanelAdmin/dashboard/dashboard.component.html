@@ -6,10 +6,16 @@
         <img src="../assets/img/Logo-PREP.png" alt="">
       </div>
       <ul>
-        <li *ngIf="!esFuncionario" (click) = "onClicListDashBoard()"><img src="../assets/img/Dashboard.png" alt="">&nbsp; <span style="font-size: 15px;">Panel de {{mRol?.rol}}</span></li>
-        <li *ngIf="!esFuncionario" (click) = "onClicListPartidos()"><img src="../assets/img/Politic.png" alt="">&nbsp; <span style="font-size: 15px;">Partidos</span></li>
-        <li *ngIf="!esFuncionario" (click) = "onClicListFuncionarioCasilla()"><img src="../assets/img/Person.png" alt="">&nbsp; <span style="font-size: 15px;">Funcionarios de Casilla</span></li>
-        <li *ngIf="esFuncionario"><img src="../assets/img/Inventory.png" alt="">&nbsp; <span style="font-size: 15px;">Casillas</span></li>
+        <li *ngIf="!esFuncionario" (click)="onClicListDashBoard()"><img src="../assets/img/Dashboard.png" alt="">&nbsp;
+          <span style="font-size: 15px;">Panel de {{mRol?.rol}}</span>
+        </li>
+        <li *ngIf="!esFuncionario" (click)="onClicListPartidos()"><img src="../assets/img/Politic.png" alt="">&nbsp;
+          <span style="font-size: 15px;">Partidos</span>
+        </li>
+        <li *ngIf="!esFuncionario" (click)="onClicListFuncionarioCasilla()"><img src="../assets/img/Person.png"
+            alt="">&nbsp; <span style="font-size: 15px;">Funcionarios de Casilla</span></li>
+        <li *ngIf="esFuncionario"><img src="../assets/img/Inventory.png" alt="">&nbsp; <span
+            style="font-size: 15px;">Casillas</span></li>
       </ul>
     </div>
 
@@ -55,6 +61,42 @@
             </div>
           </div>
         </div>
+        <div *ngIf="esPartidos" style="padding: 5%;">
+          <h1>Partidos</h1>
+          <button mat-raised-button color="primary" class="custom-button" (click)="onClickBtnNuevoPartido()">
+            Crear
+          </button>
+
+          <mat-list class='mat-elevation-z1' *ngIf='listaPartidos.length > 0'>
+            <mat-list-item *ngFor="let estado of listaPartidos; last as last"
+              style="height: auto; padding: 2%; display: flex; align-items: center;">
+              <div style="flex: 1;">
+                <h4 mat-line>{{estado.nombre}}</h4>
+                <h5 mat-line>{{estado.descripcion}}</h5>
+                <h5 mat-line> {{'Candidato : '+estado.nombreCandidato}} {{estado.apellidoCandidato}}</h5>
+              </div>
+
+              <!-- Columna 2: Imagen -->
+              <div style="flex: 1; display: flex; justify-content: center;" *ngIf="estado.imagenPartido">
+                <img [src]="'data:image/png;base64,' + estado.imagenPartido.data" alt="Imagen" style="width: 200px; height: auto;">
+              </div>
+
+              <!-- Columna 3: Botones -->
+              <div style="flex: 1; display: flex; justify-content: flex-end;">
+                <button mat-icon-button matTooltip="Editar">
+                  <mat-icon matPrefix class="custom-iconEdit"></mat-icon>
+                </button>
+                <button mat-icon-button matTooltip="Eliminar" (click)="onClickEliminarPartido(estado.id)">
+                  <mat-icon matPrefix aria-label="delete" class="custom-iconDelete"></mat-icon>
+                </button>
+              </div>
+
+              <!-- Divider -->
+              <mat-divider [inset]="true" *ngIf='!last'></mat-divider>
+            </mat-list-item>
+          </mat-list>
+
+        </div>
         <div class="content-2" *ngIf="esCrearFuncionario">
           <div class="recent-payments">
             <div class="title">
@@ -83,4 +125,130 @@
       </div>
     </div>
   </div>
+
+  <mat-sidenav #sidenavEdicion mode="side" position="end" disableClose="true" style="width: 40%;">
+    <div view-toolbar tall-toolbar></div>
+    <div fxLayout="column" fxLayoutGap="16px" mat-sidenav-view-content tall-toolbar>
+      <div
+        style="display: flex; justify-content: space-between; align-items: center; padding-left: 5%; padding-top: 3%;">
+        <!-- Título -->
+        <span class="mat-title">{{tituloSideNavPartidos}}</span>
+
+        <!-- Botón de cierre -->
+        <button mat-icon-button matTooltip="Cerrar" (click)="onClickBtnCerrarSidenavPartido()">
+          <mat-icon class="custom-iconCerrar"></mat-icon>
+        </button>
+      </div>
+      <form fxLayout="column" fxLayoutGap="8px" [formGroup]="formEdicion">
+        <div fxLayout="column">
+          <mat-form-field style="width: 100%;">
+            <input matInput type="text" placeholder="Nombre" formControlName="nombre" cdkFocusInitial required>
+            <mat-error *ngIf="nombreControl.hasError('required')">
+              Ingrese el Nombre del Partido
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div fxLayout="column">
+          <mat-form-field style="width: 100%;">
+            <input matInput type="text" placeholder="Descripcion" formControlName="descripcion">
+          </mat-form-field>
+        </div>
+        <div fxLayout="column">
+          <mat-form-field style="width: 100%;">
+            <input matInput type="text" placeholder="Candidato" formControlName="candidato" required>
+            <mat-error *ngIf="candidatoControl?.hasError('required')">
+              Ingrese el Nombre del Candidato
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div fxLayout="column">
+          <mat-form-field style="width: 100%;">
+            <input matInput type="text" placeholder="Apellido" formControlName="apellido" required>
+            <mat-error *ngIf="apellidoControl?.hasError('required')">
+              Ingrese el Apellido del Candidato
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div fxLayout="column">
+          <p style="padding-left: 5%;">Logo</p>
+          <div fxLayout="column" class="file-drop" (click)="archivoInput.click()">
+            <div fxLayout="column" fxLayoutAlign="center">
+              <div fxLayout="column" fxFlex>
+                <input aria-label="Archivo" #archivoInput hidden="true" type="file" onclick="this.value=null"
+                  (change)="onFileSelected($event)" formControlName="fileSource" />
+                <div id="panel-drop-file" fxLayoutAlign="center center" (dragover)="onDragOver($event)"
+                  (drop)="onDrop($event)">
+                  <p *ngIf="!formEdicion.controls['fileName'].value">Arrastre el archivo aquí ...</p>
+                </div>
+                <p *ngIf="selectedFile"><mat-icon class="custom-iconFile"></mat-icon>
+                  {{ selectedFile.name }}</p>
+                <br>
+                <mat-error
+                  *ngIf="formEdicion.controls['fileName'].hasError('required') && submitted && tituloSideNavPartidos === 'Nuevo Partido'"
+                  style="font-size: 75%;">
+                  Añada un archivo
+                </mat-error>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+      <br>
+      <div fxLayout="column">
+        <div
+          style="display: flex; justify-content: space-between; align-items: center; padding-left: 5%; padding-top: 3%;">
+          <p style="padding-left: 5%;">Propuestas</p>
+          <button mat-icon-button matTooltip="Agregar" (click)="onClickAgregarPropuesta()">
+            <mat-icon matPrefix aria-label="mas" class="custom-iconMas"></mat-icon>
+          </button>
+        </div>
+
+        <form fxLayout="column" fxLayoutGap="8px" [formGroup]="formPropuesta">
+          <div fxLayout="column">
+            <mat-form-field style="width: 100%;">
+              <input matInput type="text" placeholder="Nombre corto" formControlName="nombre" required>
+              <mat-error *ngIf="nomPropControl?.hasError('required')">
+                Ingrese el Nombre de Corto de la Propuesta.
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div fxLayout="column">
+            <mat-form-field style="width: 100%;">
+              <input matInput type="text" placeholder="Descripción" formControlName="descripcion" required>
+              <mat-error *ngIf="descPropControl?.hasError('required')">
+                Ingrese la descrripcion de la Propuesta.
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </form>
+
+        <mat-list class='mat-elevation-z1' *ngIf='propuestas.length > 0'>
+          <mat-list-item *ngFor="let estado of propuestas; last as last"
+            style="height: auto; padding: 2%; display: flex; align-items: center;">
+            <div style="flex: 1;">
+              <h4 mat-line>{{estado.nombreCorto}}</h4>
+              <h5 mat-line>{{estado.descripcion}}</h5>
+            </div>
+            <!-- Columna 3: Botones -->
+            <div style="flex: 1; display: flex; justify-content: flex-end;">
+              <button mat-icon-button matTooltip="Editar">
+                <mat-icon matPrefix class="custom-iconEdit"></mat-icon>
+              </button>
+              <button mat-icon-button matTooltip="Eliminar" (click)="onClickEliminarPartido(estado.id)">
+                <mat-icon matPrefix aria-label="delete" class="custom-iconDelete"></mat-icon>
+              </button>
+            </div>
+
+            <!-- Divider -->
+            <mat-divider [inset]="true" *ngIf='!last'></mat-divider>
+          </mat-list-item>
+
+        </mat-list>
+      </div>
+      <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="8px">
+        <button mat-button (click)="onClickBtnCerrarSidenavPartido()">Cancelar</button>
+        <button mat-stroked-button color="primary" (click)="onClickGuardarPartido()">Guardar</button>
+      </div>
+    </div>
+  </mat-sidenav>
 </ng-container>
