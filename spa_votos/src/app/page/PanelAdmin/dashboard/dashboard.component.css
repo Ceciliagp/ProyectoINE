@@ -87,12 +87,12 @@ th, td{
     color: #C791A8;
 }
 
-.side-menu .prep-name img{
+.side-menu .prep-name .img{
 
-    position: absolute;
+    position: relative;
     top: 40px;
     left: 10px;
-    width: 100px;
+    width: 200px;
     height: 50px;
    
 }
