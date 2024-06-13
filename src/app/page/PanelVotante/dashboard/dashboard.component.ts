@@ -61,6 +61,11 @@ export class DashboardComponent implements OnInit {
     });
   }
 
+  onClickCerrarSeion(){
+    this._votanteService.removeVotante();
+    this.GoToBack();
+  }
+
   getPartidos() {
     this.mostrarSpiner = true;
     this._votanteService.getPartidos().subscribe((data) => {
