@@ -91,6 +91,13 @@ export class AdministradorService {
     }
   }
 
+  descargarArchivo(idUsuario: number) {
+    return this.http.get<RespuestaApi<any>>(`${API.get_url(EndpointUsuario.BASE)}/votos?idUsuario=${idUsuario}`)
+      .pipe(
+        catchError((err: HttpErrorResponse) => this.serviceBase.handleError<any>(err))
+      );
+  }
+
   removeUser() {
     localStorage.removeItem('userVerification');
   }
