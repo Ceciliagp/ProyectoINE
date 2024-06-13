@@ -3,6 +3,8 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { NavegationRoutesService } from '../../../service/navegation-routes/navegation-routes.service';
 import { appRutesModule } from '../../../app.routes-names-module';
 import { PanelVotanteRoutesNames } from '../panelVotante-routing.module';
+import { VotanteService } from '../../../service/Votante/votante.service';
+import { SnackBarService } from '../../../../utils/snack-bar/snack-bar.service';
 
 @Component({
   selector: 'app-login',
@@ -11,9 +13,12 @@ import { PanelVotanteRoutesNames } from '../panelVotante-routing.module';
 })
 export class LoginComponent implements OnInit {
   formEdicion: any;
+  errorMsj: string | undefined;
 
   constructor(
     private navegatioRoute: NavegationRoutesService,
+    private _votanteService: VotanteService,
+    private _snackBar: SnackBarService,
   ){}
 
   ngOnInit(): void {
@@ -55,9 +60,30 @@ export class LoginComponent implements OnInit {
   }
 
   onClickVerificar(){
+    const curp = this.curpControl.value;
+    const seccion = this.seccionControl.value;
     this.formEdicion.markAllAsTouched();
     if(this.formEdicion.valid && this.formEdicion.dirty){
-      this.onGoDashboard();
+      this._votanteService
+      .getValidationUser(curp, seccion)
+      .subscribe((data) => {
+        if (data) {
+          if (data.exitoso) {
+            this._votanteService.setVotanteStorage(data.contenido);
+            this.onGoDashboard();
+          } else {
+            this.errorMsj = data.respuesta ?? 'Ha ocurrido un error con el servicio.'
+            this._snackBar.mostrarSnackBar(this.errorMsj, 'Aceptar', 5000);
+          }
+        } else {
+          this.errorMsj = 'Ha ocurrido un error inesperado, intente nuevamente.';
+          this._snackBar.mostrarSnackBar(
+            this.errorMsj
+          );
+        }
+      });
+    }else {
+      this._snackBar.mostrarSnackBar('Verifique los datos solicitados.');
     }
   }
 
