@@ -28,11 +28,11 @@
       <div class="header">
         <div class="nav">
           <div class="search">
-            <input type="text" placeholder="search...">
-            <!-- <button type="submit"><img src="../assets/img/Search.png" alt=""></button> -->
+            <!--  <input type="text" placeholder="search...">
+            <button type="submit"><img src="../assets/img/Search.png" alt=""></button> -->
           </div>
           <div class="user">
-            <a href="#" class="btn">Cerrar sesión</a>
+            <a class="btn" (click)="cerrarSesion()">Cerrar sesión</a>
           </div>
         </div>
       </div>
@@ -89,9 +89,9 @@
 
               <!-- Columna 3: Botones -->
               <div style="flex: 1; display: flex; justify-content: flex-end;">
-                <button mat-icon-button matTooltip="Editar">
+                <!-- <button mat-icon-button matTooltip="Editar">
                   <mat-icon matPrefix class="custom-iconEdit"></mat-icon>
-                </button>
+                </button> -->
                 <button mat-icon-button matTooltip="Eliminar" (click)="onClickEliminarPartido(estado.id)">
                   <mat-icon matPrefix aria-label="delete" class="custom-iconDelete"></mat-icon>
                 </button>
@@ -111,13 +111,14 @@
             <mat-list-item *ngFor="let estado of listaFuncionarios; last as last"
               style="height: auto; padding: 2%; display: flex; align-items: center;">
               <div style="flex: 1;">
-                <h5 mat-line>{{'Funcionario : '+estado.nombre}} {{estado.apellido}}</h5>
+                <h4 mat-line>{{'Funcionario : '+estado.nombre}} {{estado.apellido}}</h4>
+                <h5 mat-line>{{'Usuario : '+estado.nombreUsuario}}</h5>
               </div>
               <!-- Columna 3: Botones -->
               <div style="flex: 1; display: flex; justify-content: flex-end;">
-                <button mat-icon-button matTooltip="Editar">
+                <!-- <button mat-icon-button matTooltip="Editar">
                   <mat-icon matPrefix class="custom-iconEdit"></mat-icon>
-                </button>
+                </button> -->
                 <button mat-icon-button matTooltip="Eliminar" (click)="onClickEliminarFuncionario(estado.id)">
                   <mat-icon matPrefix aria-label="delete" class="custom-iconDelete"></mat-icon>
                 </button>
@@ -126,7 +127,31 @@
             </mat-list-item>
           </mat-list>
         </div>
-        
+
+        <div *ngIf="esFuncionario" style="padding: 5%;">
+          <h1>Casillas</h1>
+          <button mat-raised-button color="primary" class="custom-button" (click)="onClickBtnNuevoCasilla()">
+            Crear
+          </button>
+
+          <mat-list class='mat-elevation-z1' *ngIf='casillas.length > 0'>
+            <mat-list-item *ngFor="let estado of casillas; last as last"
+              style="height: auto; padding: 2%; display: flex; align-items: center;">
+              <div style="flex: 1;">
+                <h4 mat-line>{{'Sección : '+estado.seccion}} </h4>
+                <h5 mat-line>{{'Fecha Apertura: '+(estado.fechaInicio | date: 'short') }}</h5>
+                <h5 mat-line>{{'Fecha Cierre: '+(estado.fechaFin | date: 'short')}}</h5>
+              </div>
+              <!-- Columna 3: Botones -->
+              <div style="flex: 1; display: flex; justify-content: flex-end;">
+                <button mat-icon-button matTooltip="Eliminar" (click)="onClickEliminarCasiila(estado.id)">
+                  <mat-icon matPrefix aria-label="delete" class="custom-iconDelete"></mat-icon>
+                </button>
+              </div>
+              <mat-divider [inset]="true" *ngIf='!last'></mat-divider>
+            </mat-list-item>
+          </mat-list>
+        </div>
       </div>
     </div>
   </div>
@@ -257,7 +282,8 @@
     </div>
   </mat-sidenav>
 
-  <mat-sidenav #sidenavEdicionFuncionario mode="side" position="end" disableClose="true" style="width: 40%;"> <!--ESTOO ES PARA FUNCIONARIOS-->
+  <mat-sidenav #sidenavEdicionFuncionario mode="side" position="end" disableClose="true" style="width: 40%;">
+    <!--ESTOO ES PARA FUNCIONARIOS-->
     <div view-toolbar tall-toolbar></div>
     <div fxLayout="column" fxLayoutGap="16px" mat-sidenav-view-content tall-toolbar>
       <div
@@ -308,6 +334,76 @@
       <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="8px">
         <button mat-button (click)="onClickBtnCerrarSidenavFuncionario()">Cancelar</button>
         <button mat-stroked-button color="primary" (click)="onClickGuardarFuncionario()">Guardar</button>
+      </div>
+    </div>
+  </mat-sidenav>
+
+  <!--ESTOO ES PARA FUNCIONARIOS-->
+  <mat-sidenav #sidenavEdicionCasilla mode="side" position="end" disableClose="true" style="width: 40%;">
+    <div view-toolbar tall-toolbar></div>
+    <div fxLayout="column" fxLayoutGap="16px" mat-sidenav-view-content tall-toolbar>
+      <div
+        style="display: flex; justify-content: space-between; align-items: center; padding-left: 5%; padding-top: 3%;">
+        <!-- Título -->
+        <span class="mat-title">Nueva Casilla</span>
+
+        <!-- Botón de cierre -->
+        <button mat-icon-button matTooltip="Cerrar" (click)="onClickBtnCerrarSidenavCasilla()">
+          <mat-icon class="custom-iconCerrar"></mat-icon>
+        </button>
+      </div>
+      <form fxLayout="column" fxLayoutGap="8px" [formGroup]="formCasilla">
+        <div fxLayout="column">
+          <mat-form-field style="width: 100%;">
+            <input matInput type="text" placeholder="Sección" formControlName="seccion" cdkFocusInitial required>
+            <mat-error *ngIf="seccionFunControl.hasError('required')">
+              Ingrese la Sección de la Casilla
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <br>
+        <div fxFlex fxLayout="column">
+          <p>Fecha Apertura</p>
+          <mat-form-field style="width: 100%;">
+            <input
+              matInput
+              readonly
+              [matDatepicker]="pickerFechaInicio" formControlName="fechaInicio"
+            />
+            <mat-datepicker-toggle
+              matSuffix
+              [for]="pickerFechaInicio"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #pickerFechaInicio></mat-datepicker>
+            <mat-error *ngIf="fechaInicioControl.hasError('required')">
+              Seleccione una Fecha
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <br>
+        <div fxFlex fxLayout="column">
+          <p>Fecha Cierre</p>
+          <mat-form-field style="width: 100%;">
+            <input
+              matInput
+              readonly
+              [matDatepicker]="pickerFechaFin" formControlName="fechaFin"
+            />
+            <mat-datepicker-toggle
+              matSuffix
+              [for]="pickerFechaFin"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #pickerFechaFin></mat-datepicker>
+            <mat-error *ngIf="fechaFinControl.hasError('required')">
+              Seleccione una Fecha
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </form>
+      <br>
+      <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="8px">
+        <button mat-button (click)="onClickBtnCerrarSidenavCasilla()">Cancelar</button>
+        <button mat-stroked-button color="primary" (click)="onClickGuardarCasilla()">Guardar</button>
       </div>
     </div>
   </mat-sidenav>
