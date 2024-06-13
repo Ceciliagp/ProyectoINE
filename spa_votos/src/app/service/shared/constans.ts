@@ -9,9 +9,10 @@ export const EndpointPartidos = {
 
 export const EndpointUsuario = {
     BASE: 'Usuarios',
-    VERIFICACION_LOGIN: 'Usuarios/verificacion'
+    VERIFICACION_LOGIN: 'Usuarios/verificacion',//consulta/funcionarios,
+    GET_FUNCIONARRIOS: 'Usuarios/consulta/funcionarios'
 }
 
-export const EndpointCompra = {
-    BASE: 'Compra',
+export const EndpointCasilla = {
+    BASE: 'Casilla',
 }
