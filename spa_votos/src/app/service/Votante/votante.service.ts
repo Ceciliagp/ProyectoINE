@@ -4,8 +4,8 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { MVerificacionVotante } from '../../models/MVerificacionVotante';
 import { Observable, catchError } from 'rxjs';
 import { API } from '../../appConfig';
-import { RespuestaApi } from '../../http/respuestaAPI';
-import { MVotante } from '../../models/MVotante';
+import { Respuesta, RespuestaApi } from '../../http/respuestaAPI';
+import { MVotante, MVoto } from '../../models/MVotante';
 import { EndpointPartidos, EndpointVotante } from '../shared/constans';
 import { MPartido } from '../../models/MPartido';
 
@@ -19,8 +19,8 @@ export class VotanteService {
     private serviceBase : BaseService
   ) { }
 
-  getValidationUser(model: MVerificacionVotante): Observable<RespuestaApi<MVotante>>{
-    return this.http.post<RespuestaApi<MVotante>>(`${API.get_url(EndpointVotante.VALIDAR_VOTANTE)}`, model)
+  getValidationUser(curp: string, seccion: string): Observable<RespuestaApi<MVotante>>{
+    return this.http.get<RespuestaApi<MVotante>>(`${API.get_url(EndpointVotante.VALIDAR_VOTANTE)}?curp=${curp}&seccion=${seccion}`)
     .pipe(
       catchError((err: HttpErrorResponse) => this.serviceBase.handleError<MVotante>(err))
     );
@@ -31,5 +31,30 @@ export class VotanteService {
     .pipe(
       catchError((err: HttpErrorResponse) => this.serviceBase.handleError<Array<MPartido>>(err))
     );
+  }
+
+  postEjercerVoto(modelo: MVoto): Observable<RespuestaApi<Respuesta>>{
+    return this.http.post<RespuestaApi<Respuesta>>(`${API.get_url(EndpointVotante.BASE)}`, modelo)
+    .pipe(
+      catchError((err: HttpErrorResponse) => this.serviceBase.handleError<Respuesta>(err))
+    );
+  }
+
+  setVotanteStorage(usuario: MVotante | undefined) {
+    const user = JSON.stringify(usuario);
+    localStorage.setItem('votanteVerification', user);
+  }
+
+  getVotanteFromStorage(): MVotante | undefined {
+    const user = localStorage.getItem('votanteVerification');
+    if (user) {
+      return JSON.parse(user);
+    } else {
+      return undefined;
+    }
+  }
+
+  removeVotante() {
+    localStorage.removeItem('votanteVerification');
   }
 }

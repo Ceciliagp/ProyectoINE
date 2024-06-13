@@ -1,6 +1,6 @@
 export const EndpointVotante = {
     BASE: 'Votante',
-    VALIDAR_VOTANTE: 'Usuarios/verificacion'
+    VALIDAR_VOTANTE: 'Votante/verificacion'
 }
 
 export const EndpointPartidos = {
