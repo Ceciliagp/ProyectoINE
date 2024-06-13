@@ -1,21 +1,8 @@
-.body{
-
-	margin: 0;
-	padding: 0;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	min-height: 100vh;
-	font-family: 'Jost', sans-serif;
-	background: linear-gradient(to bottom, #F4F4F4, #B283B9, #B4B4B4);
-}
-
-
 form {
 		padding-top: 80px;
 		max-width: 600px;
-		margin: 100px auto;
-		background-color: rgb(247, 243, 243);
+		margin: 60px auto;
+		background-color: rgb(235, 232, 232);
 		width: 400px;
 		border-radius: 20px;
 		padding: 40px 40px;
@@ -56,7 +43,7 @@ button{
 
 button:hover{
 
-	background-color: #C791A8;
+	background-color: #af6183;
 	transform: translateY(-2px);
 
 }
@@ -79,3 +66,31 @@ h1{
 	top: 50%;
   
 }
+
+.footer {
+	text-align: center;
+	padding: 10px;
+	background-color: rgb(235, 232, 232);
+	margin-top: 20px;
+	font-size: 9px;
+	color: #000000;
+  }
+  
+  .footer p {
+	margin: 5px 0;
+  }
+  
+  /* Responsive design */
+  @media (max-width: 600px) {
+	.footer {
+		font-size: 12px;
+		padding: 8px;
+	}
+  }
+  
+  @media (min-width: 601px) and (max-width: 1024px) {
+	.footer {
+		font-size: 13px;
+		padding: 9px;
+	}
+  }

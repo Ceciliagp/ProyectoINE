@@ -2,7 +2,7 @@
   <div style="min-height: 100vh;">
     <div class="side-menu">
       <div class="prep-name">
-        <img src="../assets/img/Logo-PREP.png" alt="">
+        <img src="../assets/img/Logo.png" alt="">
       </div>
       <ul>
         <li *ngIf="!esFuncionario" (click)="onClicListDashBoard()">
@@ -31,12 +31,11 @@
     <div class="container">
       <div class="header">
         <div class="nav">
-          <div class="search">
-            <!--  <input type="text" placeholder="search...">
-            <button type="submit"><img src="../assets/img/Search.png" alt=""></button> -->
-          </div>
           <div class="user">
             <a class="btn" (click)="cerrarSesion()">Cerrar sesión</a>
+          </div>
+          <div class="prep-name">
+            <img src="../assets/img/Logo-PREP.png" alt="">
           </div>
         </div>
       </div>
@@ -419,4 +418,24 @@
       </div>
     </div>
   </mat-sidenav>
+
+  
+  <!-- Footer -->
+<div class="container-footer">
+<div class="footer-columns">
+  <div class="footer-column">
+      <p>Página con fines educativos</p>
+  </div>
+  <div class="prep-name">
+    <p><img src="../assets/img/Mexico.png" alt=""></p>
+  </div>
+  <div class="footer-column">
+     <p>© 2024 | Instituto Nacional Electoral</p>
+  </div>
+</div>
+</div>
 </ng-container>
+
+
+              
+           

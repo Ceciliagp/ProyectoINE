@@ -1,22 +1,89 @@
 .card {
-    border: 1px solid #ddd;
+    border: 3px solid #080000;
     transition: transform 0.2s;
+    padding: 20px;
+    gap: 20px;
   }
   
+  h1, h2, h3, h4, h5, h6{
+    color: #000;
+    font-size: 1.438rem;
+    margin-top: 28px;
+    font-weight: 600;
+  }
+
   .card:hover {
     transform: scale(1.05);
   }
   
   .card-img-top {
+
+    width: 100px;
     height: 200px;
     object-fit: cover;
+    
   }
   
   .card-body {
-    background-color: #f8f9fa;
+    background-color: #f5e8ed;
+    border-radius: 15px;
   }
-  
+
   .card-footer {
     background-color: #e9ecef;
   }
   
+  .btn {
+    background: #c791a8;
+    color: white;
+    padding: 5px 10px;
+    text-align: center;
+  }
+  
+  .btn:hover {
+    color: #c791a8;
+    background: white;
+    padding: 3px 8px;
+    border: 2px solid #c791a8;
+    
+  }
+
+  .prep-name img{
+    margin-left: auto;
+    width: 160px;
+    height: 45px;
+    position: fixed;
+    top: 0;
+    right: 3px;
+}
+
+.footer {
+  text-align: center;
+  padding: 15px;
+  background-color: #f1f1f1;
+  margin-top: 10px;
+  font-size: 14px;
+  color: #333;
+  width: 90%;
+  display: flex;
+  align-items: center;
+}
+
+.footer p {
+  margin: 10px 0;
+}
+
+/* Responsive design */
+@media (max-width: 600px) {
+  .footer {
+      font-size: 12px;
+      padding: 8px;
+  }
+}
+
+@media (min-width: 601px) and (max-width: 1024px) {
+  .footer {
+      font-size: 13px;
+      padding: 9px;
+  }
+}

@@ -2,13 +2,15 @@
     <div class="container" style="padding-top: 5%;">
         <div class="example-container">
             <div style="display: flex; text-align: center; justify-content: center; width: 100%;">
-                <img src="../assets/img/Logo-PREP.png" alt="">
             </div>
             <br>
             <div class="alert alert-warning" role="alert" *ngIf="errorMsj" style="display: flex; text-align: center; justify-content: center;">
                 {{errorMsj}}
                </div>
             <form fxFlex fxLayout="column" fxLayoutGap="8px" class="styleFomDirecc" [formGroup]="formEdicion">
+                <div class="iniciar-sesion">
+                    <img src="../assets/img/Logo-PREP.png" alt="">
+                  </div>
                 <div fxFlex="50" fxLayout="column">
                     <mat-form-field style="width: 100%;">
                         <mat-label>Curp</mat-label>
@@ -37,12 +39,12 @@
 
                     </mat-form-field>
                 </div>
-            </form>
             <div fxFlexFill fxLayout="row"
                 style="width: 100%; height: 10%; display: flex; text-align: center; align-items: center; justify-content: center; padding-top: 1%;">
                 <button mat-button class="ingresar-btn" style="width: 40%; height: 50px; color: #fff;"
                     (click)="onClickVerificar()">Ingresar</button>
             </div>
+        </form>
         </div>
     </div>
 </ng-container>
