@@ -1,21 +1,26 @@
-<ng-container container>
+<ng-container>
   <div style="min-height: 100vh;">
     <div class="side-menu">
-
       <div class="prep-name">
         <img src="../assets/img/Logo-PREP.png" alt="">
       </div>
       <ul>
-        <li *ngIf="!esFuncionario" (click)="onClicListDashBoard()"><img src="../assets/img/Dashboard.png" alt="">&nbsp;
+        <li *ngIf="!esFuncionario" (click)="onClicListDashBoard()">
+          <img src="../assets/img/Dashboard.png" alt="">&nbsp;
           <span style="font-size: 15px;">Panel de {{mRol?.rol}}</span>
         </li>
-        <li *ngIf="!esFuncionario" (click)="onClicListPartidos()"><img src="../assets/img/Politic.png" alt="">&nbsp;
+        <li *ngIf="!esFuncionario" (click)="onClicListPartidos()">
+          <img src="../assets/img/Politic.png" alt="">&nbsp;
           <span style="font-size: 15px;">Partidos</span>
         </li>
-        <li *ngIf="!esFuncionario" (click)="onClicListFuncionarioCasilla()"><img src="../assets/img/Person.png"
-            alt="">&nbsp; <span style="font-size: 15px;">Funcionarios de Casilla</span></li>
-        <li *ngIf="esFuncionario"><img src="../assets/img/Inventory.png" alt="">&nbsp; <span
-            style="font-size: 15px;">Casillas</span></li>
+        <li *ngIf="!esFuncionario" (click)="onClicListFuncionarioCasilla()">
+          <img src="../assets/img/Person.png" alt="">&nbsp;
+          <span style="font-size: 15px;">Funcionarios de Casilla</span>
+        </li>
+        <li *ngIf="esFuncionario">
+          <img src="../assets/img/Inventory.png" alt="">&nbsp;
+          <span style="font-size: 15px;">Casillas</span>
+        </li>
       </ul>
     </div>
 
@@ -27,7 +32,7 @@
             <!-- <button type="submit"><img src="../assets/img/Search.png" alt=""></button> -->
           </div>
           <div class="user">
-            <a href="#" class="btn">Añadir Nuevo</a>
+            <a href="#" class="btn">Cerrar sesión</a>
           </div>
         </div>
       </div>
@@ -61,11 +66,11 @@
             </div>
           </div>
         </div>
+
         <div *ngIf="esPartidos" style="padding: 5%;">
           <h1>Partidos</h1>
-          <button mat-raised-button color="primary" class="custom-button" (click)="onClickBtnNuevoPartido()">
-            Crear
-          </button>
+          <button mat-raised-button color="primary" class="custom-button"
+            (click)="onClickBtnNuevoPartido()">Crear</button>
 
           <mat-list class='mat-elevation-z1' *ngIf='listaPartidos.length > 0'>
             <mat-list-item *ngFor="let estado of listaPartidos; last as last"
@@ -73,12 +78,13 @@
               <div style="flex: 1;">
                 <h4 mat-line>{{estado.nombre}}</h4>
                 <h5 mat-line>{{estado.descripcion}}</h5>
-                <h5 mat-line> {{'Candidato : '+estado.nombreCandidato}} {{estado.apellidoCandidato}}</h5>
+                <h5 mat-line>{{'Candidato : '+estado.nombreCandidato}} {{estado.apellidoCandidato}}</h5>
               </div>
 
               <!-- Columna 2: Imagen -->
               <div style="flex: 1; display: flex; justify-content: center;" *ngIf="estado.imagenPartido">
-                <img [src]="'data:image/png;base64,' + estado.imagenPartido.data" alt="Imagen" style="width: 200px; height: auto;">
+                <img [src]="'data:image/png;base64,' + estado.imagenPartido.data" alt="Imagen"
+                  style="width: 200px; height: auto;">
               </div>
 
               <!-- Columna 3: Botones -->
@@ -90,38 +96,37 @@
                   <mat-icon matPrefix aria-label="delete" class="custom-iconDelete"></mat-icon>
                 </button>
               </div>
-
-              <!-- Divider -->
               <mat-divider [inset]="true" *ngIf='!last'></mat-divider>
             </mat-list-item>
           </mat-list>
+        </div>
 
+        <div *ngIf="esCrearFuncionario" style="padding: 5%;">
+          <h1>Funcionarios</h1>
+          <button mat-raised-button color="primary" class="custom-button" (click)="onClickBtnNuevoFuncionario()">
+            Crear
+          </button>
+
+          <mat-list class='mat-elevation-z1' *ngIf='listaFuncionarios.length > 0'>
+            <mat-list-item *ngFor="let estado of listaFuncionarios; last as last"
+              style="height: auto; padding: 2%; display: flex; align-items: center;">
+              <div style="flex: 1;">
+                <h5 mat-line>{{'Funcionario : '+estado.nombre}} {{estado.apellido}}</h5>
+              </div>
+              <!-- Columna 3: Botones -->
+              <div style="flex: 1; display: flex; justify-content: flex-end;">
+                <button mat-icon-button matTooltip="Editar">
+                  <mat-icon matPrefix class="custom-iconEdit"></mat-icon>
+                </button>
+                <button mat-icon-button matTooltip="Eliminar" (click)="onClickEliminarFuncionario(estado.id)">
+                  <mat-icon matPrefix aria-label="delete" class="custom-iconDelete"></mat-icon>
+                </button>
+              </div>
+              <mat-divider [inset]="true" *ngIf='!last'></mat-divider>
+            </mat-list-item>
+          </mat-list>
         </div>
-        <div class="content-2" *ngIf="esCrearFuncionario">
-          <div class="recent-payments">
-            <div class="title">
-              <h2>FUNCIONARIO</h2>
-            </div>
-            <table>
-              <tr>
-                <th>Candidatos</th>
-                <th>Partidos</th>
-                <th>Votos Contabilizados</th>
-              </tr>
-            </table>
-          </div>
-          <div class="new-students">
-            <div class="title">
-              <h2>CASILLA</h2>
-            </div>
-            <table>
-              <tr>
-                <th>Hora Inicio</th>
-                <th>Hora Fin</th>
-              </tr>
-            </table>
-          </div>
-        </div>
+        
       </div>
     </div>
   </div>
@@ -248,6 +253,61 @@
       <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="8px">
         <button mat-button (click)="onClickBtnCerrarSidenavPartido()">Cancelar</button>
         <button mat-stroked-button color="primary" (click)="onClickGuardarPartido()">Guardar</button>
+      </div>
+    </div>
+  </mat-sidenav>
+
+  <mat-sidenav #sidenavEdicionFuncionario mode="side" position="end" disableClose="true" style="width: 40%;"> <!--ESTOO ES PARA FUNCIONARIOS-->
+    <div view-toolbar tall-toolbar></div>
+    <div fxLayout="column" fxLayoutGap="16px" mat-sidenav-view-content tall-toolbar>
+      <div
+        style="display: flex; justify-content: space-between; align-items: center; padding-left: 5%; padding-top: 3%;">
+        <!-- Título -->
+        <span class="mat-title">{{tituloSideNavFuncionario}}</span>
+
+        <!-- Botón de cierre -->
+        <button mat-icon-button matTooltip="Cerrar" (click)="onClickBtnCerrarSidenavFuncionario()">
+          <mat-icon class="custom-iconCerrar"></mat-icon>
+        </button>
+      </div>
+      <form fxLayout="column" fxLayoutGap="8px" [formGroup]="formEdicionFuncionario">
+        <div fxLayout="column">
+          <mat-form-field style="width: 100%;">
+            <input matInput type="text" placeholder="Nombre" formControlName="nombre" cdkFocusInitial required>
+            <mat-error *ngIf="nomFunControl.hasError('required')">
+              Ingrese el Nombre del Funcionario
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div fxLayout="column">
+          <mat-form-field style="width: 100%;">
+            <input matInput type="text" placeholder="Apellido" formControlName="apellido" required>
+            <mat-error *ngIf="apeFunControl?.hasError('required')">
+              Ingrese el Apellio del Funcionario
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div fxLayout="column">
+          <mat-form-field style="width: 100%;">
+            <input matInput type="text" placeholder="Usuario" formControlName="usuarioFun" required>
+            <mat-error *ngIf="usuarioFunControl?.hasError('required')">
+              Ingrese el Usuario del Funcionario.
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div fxLayout="column">
+          <mat-form-field style="width: 100%;">
+            <input matInput type="text" placeholder="Contraseña" formControlName="contrasenia" required>
+            <mat-error *ngIf="contraseniaControl?.hasError('required')">
+              Ingrese la Contraseña del Funcionario.
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </form>
+      <br>
+      <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="8px">
+        <button mat-button (click)="onClickBtnCerrarSidenavFuncionario()">Cancelar</button>
+        <button mat-stroked-button color="primary" (click)="onClickGuardarFuncionario()">Guardar</button>
       </div>
     </div>
   </mat-sidenav>
