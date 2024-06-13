@@ -17,10 +17,14 @@
           <img src="../assets/img/Person.png" alt="">&nbsp;
           <span style="font-size: 15px;">Funcionarios de Casilla</span>
         </li>
-        <li *ngIf="esFuncionario">
+        <li *ngIf="esFuncionario" (click)="onClicListCasilla()">
           <img src="../assets/img/Inventory.png" alt="">&nbsp;
           <span style="font-size: 15px;">Casillas</span>
         </li>
+        <!-- <li *ngIf="esFuncionario" (click)="onClicListAcciones()">
+          <img src="../assets/img/Inventory.png" alt="">&nbsp;
+          <span style="font-size: 15px;">Acciones</span>
+        </li> -->
       </ul>
     </div>
 
@@ -128,7 +132,7 @@
           </mat-list>
         </div>
 
-        <div *ngIf="esFuncionario" style="padding: 5%;">
+        <div *ngIf="esFuncionario && esCasillas" style="padding: 5%;">
           <h1>Casillas</h1>
           <button mat-raised-button color="primary" class="custom-button" (click)="onClickBtnNuevoCasilla()">
             Crear
@@ -151,6 +155,14 @@
               <mat-divider [inset]="true" *ngIf='!last'></mat-divider>
             </mat-list-item>
           </mat-list>
+        </div>
+
+        <div *ngIf="esFuncionario && esAcciones" style="padding: 5%;">
+          <h1>Acciones</h1>
+          <br>
+          <button mat-raised-button color="primary" class="custom-button" (click)="onClickDescargarActa()">
+            Generar Acta de Votos
+          </button>
         </div>
       </div>
     </div>

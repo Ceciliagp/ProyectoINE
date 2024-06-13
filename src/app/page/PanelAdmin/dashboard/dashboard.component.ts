@@ -20,6 +20,8 @@ export class DashboardComponent implements OnInit {
   esPartidos = false;
   esDashBoard = true;
   esFuncionario = false;
+  esAcciones = false;
+  esCasillas = true;
   esCrearFuncionario = false;
   mostrarSpiner = false;
   listaPartidos: Array<MPartido> = [];
@@ -182,6 +184,16 @@ export class DashboardComponent implements OnInit {
     this.esPartidos = false;
     this.esDashBoard = true;
     this.esCrearFuncionario = false;
+  }
+
+  onClicListCasilla() {
+    this.esAcciones = false;
+    this.esCasillas = true;
+  }
+
+  onClicListAcciones() {
+    this.esAcciones = true;
+    this.esCasillas = false;
   }
 
   getPartidos() {
@@ -620,5 +632,45 @@ export class DashboardComponent implements OnInit {
         this.mostrarSpiner = false;
       }
     });
+  }
+
+  private descargar(idUsuario: number) {
+    return this._adminService.descargarArchivo(idUsuario);
+  }
+
+  onClickDescargarActa(){
+    const usuario = this._adminService.getUsuarioFromStorage();
+
+    if(usuario === undefined){
+      this._snackBar.mostrarSnackBar(
+        'Usuario no autorizado'
+      );
+
+      this.GoToBack();
+      return;
+    }
+
+    this.descargar(usuario.id).pipe()
+        .subscribe((response) => {
+            if (response.exitoso){
+              const blob = new Blob([new Uint8Array(response.contenido.datos)], { type: 'application/pdf' }); //application/octet-stream
+              const url = window.URL.createObjectURL(blob);
+
+              const a = document.createElement('a');
+              a.href = url;
+              a.download = 'Acta de Votos.pdf'; // Nombre del archivo
+
+              document.body.appendChild(a);
+
+              a.click();
+
+              document.body.removeChild(a);
+
+              window.URL.revokeObjectURL(url);
+            } else {
+              const mensaje = response.respuesta ?? 'Ha ocurrido un error durante la descarga del archivo, intente nuevamente.';
+              this._snackBar.mostrarSnackBar(mensaje);
+            }
+        });
   }
 }
