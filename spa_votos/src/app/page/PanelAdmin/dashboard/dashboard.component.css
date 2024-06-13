@@ -1,7 +1,8 @@
+/* Estilos generales */
 * {
   margin: 0;
   padding: 0;
-  box-sizing: 0;
+  box-sizing: border-box; /* Corrige el valor de box-sizing */
   font-family: Arial, Helvetica, sans-serif;
 }
 
@@ -17,8 +18,7 @@ li {
   cursor: pointer;
 }
 
-h1,
-h2 {
+h1, h2 {
   color: #030303;
   position: relative;
   top: 0;
@@ -55,15 +55,14 @@ table {
   padding: 10px;
 }
 
-th,
-td {
+th, td {
   text-align: left;
   padding: 8px;
 }
 
 .side-menu {
   position: fixed;
-  background:  #a87193;
+  background: #a87193;
   width: 20vw;
   min-height: 100vh;
   display: flex;
@@ -90,7 +89,7 @@ td {
   color: #B283B9;
 }
 
-.side-menu .prep-name img{
+.side-menu .prep-name img {
   position: relative;
   top: 20px;
   left: 0;
@@ -125,7 +124,7 @@ td {
 }
 
 .container .header .nav .user {
-  flex: 1px;
+  flex: 1;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -290,9 +289,7 @@ mat-sidenav-container {
   cursor: pointer;
 }
 
-
-.sidebar-form{
-
+.sidebar-form {
   position: fixed;
   top: 50%;
   right: -350px;
@@ -305,28 +302,28 @@ mat-sidenav-container {
   transition: right .4s linear;
 }
 
-.sidebar-form .show{
+.sidebar-form .show {
   right: 0;
 }
 
-.sidebar-form .action{
-position: absolute;
-background-color: #999;
-font-family: 'roboto';
-font-weight: 400;
-letter-spacing: 1px;
-color: #fff;
-width: 150px;
-height: 40px;
-text-align: center;
-line-height: 40px;
-cursor: pointer;
-left: -95px;
-top: 50%;
-transform: translateY(-50%);
+.sidebar-form .action {
+  position: absolute;
+  background-color: #999;
+  font-family: 'roboto';
+  font-weight: 400;
+  letter-spacing: 1px;
+  color: #fff;
+  width: 150px;
+  height: 40px;
+  text-align: center;
+  line-height: 40px;
+  cursor: pointer;
+  left: -95px;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
-.sidebar-form h3{
+.sidebar-form h3 {
   font-family: 'monserrat';
   font-weight: 700;
   text-transform: uppercase;
@@ -336,7 +333,7 @@ transform: translateY(-50%);
   color: rgb(22, 21, 21);
 }
 
-.sidebar-form .form-group label{
+.sidebar-form .form-group label {
   font-family: 'roboto';
   font-weight: 500;
   font-size: 15px;
@@ -344,46 +341,60 @@ transform: translateY(-50%);
   color: #333;
 }
 
-/* Footer */
+/* Footer Container */
 .container-footer {
-  width: 100%;
-  background-color: #f1f1f1;
+  width: 80vw; /* Cambiado a 80vw para que coincida con el navbar */
+  background-color: #F2F2F2;
+  position: fixed;
+  bottom: 0;
+  left: 20vw; /* Ajusta esto si tu sidebar tiene un ancho diferente */
+  height: 10vh;
+  display: flex;
   align-items: center;
-  position: absolute;
-  right: 0;
-  width: 80vw;
-  height: 20vh;
- 
-  
+  justify-content: center;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  z-index: 1000; /* Asegura que el footer esté encima de otros elementos */
 }
 
+/* Footer Columns */
 .footer-columns {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start; /* Alinear contenido a la izquierda */
   align-items: center;
+  width: 100%;
   padding: 20px;
   color: #333;
   font-size: 14px;
 }
 
+/* Footer Column */
 .footer-column {
   flex: 1;
-  text-align: center;
+  text-align: left; /* Alinear texto a la izquierda */
+  padding: 0 10px; /* Añadir padding para espacio entre columnas */
 }
 
-/* Responsive */
+/* Footer Logo */
+.footer .prep-name {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.footer .prep-name img {
+  width: 30px;
+  height: 30px;
+}
+
+/* Responsive Design */
 @media (max-width: 600px) {
   .footer-columns {
-      flex-direction: column;
+    flex-direction: column;
+    align-items: flex-start; /* Alinear columnas a la izquierda */
   }
 
   .footer-column {
-      margin-bottom: 10px;
+    margin-bottom: 5px;
+    padding: 0; /* Eliminar padding extra en modo columna */
   }
-}
-
-.container-footer .prep-name img{
- 
-  width: 50px;
-  height: 50px;
 }
