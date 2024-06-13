@@ -14,3 +14,12 @@ export class MRol {
     rol: string = ''
     activo: boolean = true;
 }
+
+
+  
+  export class listaFuncionarios {
+
+
+    id: number = 0;
+
+  }

@@ -24,12 +24,18 @@ export class DashboardComponent implements OnInit {
   listaPartidos: Array<MPartido> = [];
   tituloSideNavPartidos = '';
   formEdicion: any;
+  formEdicionFuncionario: any;
   formPropuesta: any;
   selectedFile: File | null = null;
   submitted = false;
   propuestas: Array<MPropuesta> = [];
+  listaFuncionarios: Array<MUsuario> = [];  
+  tituloSideNavFuncionario = '';
 
   @ViewChild('sidenavEdicion', { static: true }) sidenav:
+    | MatSidenav
+    | undefined;
+    @ViewChild('sidenavEdicionFuncionario', { static: true }) sidenavFuncionario:
     | MatSidenav
     | undefined;
 
@@ -50,8 +56,11 @@ export class DashboardComponent implements OnInit {
     this.mRol = this.mUsuario.rol;
     this.esFuncionario = this.mRol?.rol === 'FUNCIONARIO';
     this.iniciarFormEdicion();
+    this.iniciarFormEdicionFuncionario();
     this.iniciarFormEdicionProp();
     this.getPartidos();
+    this.getFuncionarios();
+    
   }
 
   private iniciarFormEdicion() {
@@ -64,11 +73,37 @@ export class DashboardComponent implements OnInit {
     });
   }
 
+  private iniciarFormEdicionFuncionario() {
+    this.formEdicionFuncionario = new FormGroup({
+      nombre: new FormControl('', [Validators.required]),
+      apellido: new FormControl(''),
+      usuarioFun: new FormControl('', [Validators.required]),
+      contrasenia: new FormControl('', [Validators.required]),
+      idRol: new FormControl(1),
+    });
+  }
+
   private iniciarFormEdicionProp() {
     this.formPropuesta = new FormGroup({
       nombre: new FormControl('', [Validators.required]),
       descripcion: new FormControl(''),
     });
+  }
+
+  get usuarioFunControl(): FormControl {
+    return this.formEdicionFuncionario.get('usuarioFun') as FormControl;
+  }
+
+  get contraseniaControl(): FormControl {
+    return this.formEdicionFuncionario.get('contrasenia') as FormControl;
+  }
+
+  get nomFunControl(): FormControl {
+    return this.formEdicionFuncionario.get('nombre') as FormControl;
+  }
+
+  get apeFunControl(): FormControl {
+    return this.formEdicionFuncionario.get('apellido') as FormControl;
   }
 
   get nombreControl(): FormControl {
@@ -143,7 +178,32 @@ export class DashboardComponent implements OnInit {
         );
         this.mostrarSpiner = false;
       }
-    });
+    });  
+  }
+
+  getFuncionarios() {
+    this.mostrarSpiner = true;
+    // this._usuarioService.getFuncionarios().subscribe((data) => {//CORREGIS ESTA PARTE DEL CÓDIGO
+    //   if (data) {
+    //     if (data.exitoso) {
+    //       this.listaFuncionarios = data?.contenido ?? [];
+    //       this.listaPartidos.forEach(e => {
+    //         e.urlImg = e.imagenPartido?.data
+    //       });
+    //     } else {
+    //       this._snackBar.mostrarSnackBar(
+    //         data.respuesta ??
+    //           'Ha ocurrido un error durante de la consulta del Carrito de Compra, intente nuevamente.'
+    //       );
+    //       this.mostrarSpiner = false;
+    //     }
+    //   } else {
+    //     this._snackBar.mostrarSnackBar(
+    //       'Ha ocurrido un error inesperado, intente nuevamente.'
+    //     );
+    //     this.mostrarSpiner = false;
+    //   }
+    // });  
   }
 
   onClickEliminarPartido(id: number) {
@@ -333,8 +393,65 @@ export class DashboardComponent implements OnInit {
     }
   }
 
-  // obtenerImagen(id: string) {
-  //   const url = `URL_DE_TU_ENDPOINT/${id}`; // Reemplaza 'URL_DE_TU_ENDPOINT' con la URL de tu endpoint real
-  //   return this.http.get(url, { responseType: 'blob' });
-  // }
+  onClickBtnNuevoFuncionario(){
+    if (!this.sidenavFuncionario?.opened) {
+      this.formEdicionFuncionario.reset();
+      this.tituloSideNavFuncionario = 'Nuevo Funcionario';
+      this.sidenavFuncionario?.open();
+    } else {
+      this.formEdicionFuncionario.reset();
+      this.tituloSideNavFuncionario = 'Nuevo Funcionario';
+    }
+  }
+
+  onClickEliminarFuncionario(id: number){
+  
+    // this._adminService.deleteUsuario(id).subscribe((data) => { //CORREGIR ESTA PARTE DEL CÓDIGO
+    //   if (data) {
+    //     if (data.exitoso) {
+    //       this._snackBar.mostrarSnackBar(
+    //         'Se ha eliminado Correctamente el Partido'
+    //       );
+    //       this.getFuncionarios();
+    //     } else {
+    //       this._snackBar.mostrarSnackBar(
+    //         data.respuesta ??
+    //           'Ha ocurrido un error durante la Eliminación del Partido, intente nuevamente.'
+    //       );
+    //       this.mostrarSpiner = false;
+    //     }
+    //   } else {
+    //     this._snackBar.mostrarSnackBar(
+    //       'Ha ocurrido un error inesperado, intente nuevamente.'
+    //     );
+    //     this.mostrarSpiner = false;
+    //   }
+    // });
+  
+  }
+
+  onClickBtnCerrarSidenavFuncionario(){
+    this.sidenavFuncionario?.close().then(() => {
+      this.formEdicionFuncionario.reset();
+      this.tituloSideNavFuncionario = 'Nuevo Funcionario';
+    });      
 }
+
+  onClickGuardarFuncionario(){
+    this.submitted = true;
+    this.formEdicionFuncionario.markAllAsTouched();
+    if (this.formEdicionFuncionario.valid && this.formEdicionFuncionario.dirty) {
+      const mUsuario = new MUsuario();
+      mUsuario.nombre = this.nomFunControl.value;
+      mUsuario.apellido = this.apeFunControl.value;
+      mUsuario.nombreUsuario = this.usuarioFunControl.value;
+      mUsuario.contrasenia = this.contraseniaControl.value; // CHECA ESTA PARTE NO SÉ SI ESTÁ BIEN
+
+      this.listaFuncionarios.push(mUsuario);
+      this.onClickBtnCerrarSidenavFuncionario();
+    } else {
+      this._snackBar.mostrarSnackBar('Verifique los datos solicitados.');
+    }
+  }
+}
+
